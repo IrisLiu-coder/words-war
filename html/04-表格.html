@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<head>
+    <title>表格</title>
+</head>
+<body>
+
+       <p><font size="5">我是表格</font></p> 
+       <p>普通版</p>
+        <table cellpadding="10" border='1'><!--border=邊框寬-->
+            <tr>
+                <td>1r1d</td>
+                <td>1r2d</td>
+                <td>1r3d</td>
+            </tr>
+            <tr>
+                <td>2r1d</td>
+                <td>2r2d</td>
+                <td>2r3d</td>
+            </tr>
+        </table>
+        <p>標題版</p>
+        <table  cellpadding="10" border='1'>
+            <caption>大標</caption>
+            <tr>
+                <th>標題一</th>
+                <th>標題二</th>
+                <th>標題三</th>
+            </tr>
+            <tr>
+                <td>1r1d</td>
+                <td>1r2d</td>
+                <td>1r3d</td>
+            </tr>
+            <tr>
+                <td>2r1d</td>
+                <td>2r2d</td>
+                <td>2r3d</td>
+            </tr>
+        </table>
+        <p>合併版</p>
+        <table cellpadding="10" border='1'>
+            <tr style="color: rgb(38, 0, 255);">
+                <td>1r1d</td>
+                <td>1r2d</td>
+                <td rowspan="2">rowspan</td>
+            </tr>
+            <tr>
+                <td>2r1d</td>
+                <td>2r2d</td>
+                
+            </tr>
+        </table>
+</body>

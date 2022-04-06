@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<head>
+    <title>超連結與圖片</title>
+</head>
+<body>
+    <a href="https://www.google.com.tw/?gws_rd=ssl">google連結</a><br>
+    <a href="https://www.instagram.com/">IG連結</a><br>
+    <p><font size="3">建議書籤</font></p>
+    <ol>
+        <li><a href="# 一">我是一號</a></li>
+        <li><a href="# 二">我是二號</a></li>
+    </ol>
+    <canvas id="brown" width="200" height="100">
+    <script>
+    var c=document.getElementById("brown");
+    var ctx=c.getContext("2d");
+    ctx.fillStyle="#844200	";
+    ctx.fillRect(0,0,200,100);
+    </script>
+    </canvas>
+
+    <pre>
+    <p><font size="3">加入圖片</font></p>
+    原本的樣子
+    <img src="https://storage.googleapis.com/www-cw-com-tw/article/201810/article-5bd182cf13ebb.jpg" title="貓貓">
+    變更大小
+    <img src="https://storage.googleapis.com/www-cw-com-tw/article/201810/article-5bd182cf13ebb.jpg" height="100">
+    註解
+    <img src="https://storage.googleapis.com/www-cw-com-tw/article/201810/article-5bd182cf13ebb.jpg" alt="貓貓" height="100">
+    邊框
+    <img src="https://storage.googleapis.com/www-cw-com-tw/article/201810/article-5bd182cf13ebb.jpg" border="10" height="100">
+    </pre>
+    <p title="悄悄話 小聲說"><font size="5">定義清單</font></p>
+    <dl>
+        <dt><a name=" 一">標題一</a></dt>
+        <dd>
+            文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文<br>
+            文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文<br>
+        </dd>
+        <dt><a name=" 二">標題二</a></dt>
+        <dd>
+            文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文<br>
+            文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文<br>
+        </dd>
+    </dl>
+</body>

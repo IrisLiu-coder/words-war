@@ -1,0 +1,56 @@
+<!DOCTYPE html><html>
+    <head><title>流程控制</title></head>
+    <body>
+        <!--if else-->
+        <script>
+            var a=413,b=prompt("guess the number a:");
+            if(a>b){
+                alert("a>b");
+            }else if(a==b){
+                alert("a=b=413");
+            }else if(a<b){
+                alert("a<b");
+            }
+        </script>
+        <!--switch-->
+        <script>
+            var score=prompt("Your score:");
+            switch(score/10){
+                case 10:
+                    alert("A");
+                    break;
+                case 9:
+                    alert("B");
+                    break;
+                case 8:
+                    alert("C");
+                    break;
+                case 7:
+                    alert("D");
+                    break;
+                case 6:
+                    alert("E");
+                    break;
+                default:
+                    alert("F");
+            }
+        </script>
+        <!--for-->
+        <script>
+            var c=prompt("Go to :"),sentence="";
+            for(var i=1;i<=c;i++){
+                sentence+=i;
+            }
+            alert(sentence);
+        </script>
+        <!--while-->
+        <script>
+            var d=prompt("when?"),e=0;
+            while(e<d){
+                e++;
+                alert(e);
+            }
+            alert("time up");
+        </script>
+    </body>
+</html>

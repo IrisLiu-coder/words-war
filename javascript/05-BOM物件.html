@@ -1,0 +1,27 @@
+<!DOCTYPE html><html>
+    <head><title>BOM物件</title></head>
+    <body>
+        <script>
+            //取得瀏覽器視窗的可見範圍的寬度和高度（不包含工具列、捲軸這些），單位是 px (pixels)：
+            var a=window.innerWidth,b=window.innerHeight;
+            //瀏覽器開啟新視窗
+            var windowObjectReference = window.open(
+                'http://www.fooish.com/',
+                'fooish',
+                'width=800,height=600,resizable=no,scrollbars=yes,status=no,location=no');
+            //關閉瀏覽器視窗
+            win.close();
+            //移動瀏覽器視窗
+            var win = window.open('http://www.fooish.com/', '', 'width=200,height=100');
+            win.moveTo(100, 100);//距離螢幕左緣和上緣多少的距離
+            win.close();
+            var win = window.open('http://www.fooish.com/', '', 'width=200,height=100');
+            win.moveBy(200, 200);//往左和往下移動多少距離
+            win.close();
+            //改變瀏覽器視窗的大小
+            var win = window.open('http://www.fooish.com/');
+            window.resizeTo(800, 600);
+            win.close();      
+        </script>
+    </body>
+</html>

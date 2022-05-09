@@ -1,0 +1,186 @@
+<!DOCTYPE html><html>
+    <head><title>wordsgamecode</title></head>
+    <body>
+        <canvas id="myCanvas" width="600" height="600" style="position: absolute;top:0px;left: 0px;background: rgb(0, 0, 0);display: block;margin: 0 auto;"></canvas>
+        <script>
+            function generateRandomInt(min,max){
+                return Math.floor((Math.random() * (max+1 -min)) +min);
+            }
+            function get_random_color() {
+                var color = "";
+                for(var i = 0; i < 3; i++) {
+                    var sub = Math.floor(Math.random() * 256).toString(16);
+                    color += (sub.length == 1 ? "0" + sub : sub);
+                }
+                return "#" + color;
+            }
+            var canvas = document.getElementById("myCanvas");
+            var ctx = canvas.getContext("2d");
+            var degree=270;bx=0;by=0;ed=0;Barrelx=0;Barrely=0;
+            var down=0,up=0,MeteoriteNum=6;score=0;MeteoriteNumonDis=0;lives=3;
+            var Meteorite = [];
+            for (var i = 0; i < MeteoriteNum; i++) {
+                var degreeM=i*60;
+                if(degreeM>180){
+                    degreeM=-(degreeM-180);
+                }
+                Meteorite[i] = { r: 300, de: degreeM, status: 1 ,num:0,color:get_random_color()};
+            }
+            let mouse = {
+                x : 0,y : 0,
+                };
+            window.addEventListener('mousemove',(event) => {
+                mouse.x = event.pageX;mouse.y = event.pageY;
+            });
+            function resetM(){
+                for (var i = 0; i < MeteoriteNum; i++) {
+                    var degreeM=i*60;
+                    if(degreeM>180){
+                        degreeM=-(degreeM-180);
+                    }
+                    Meteorite[i] = { r: 300, de: degreeM, status: 1 ,num:0,color:get_random_color()};
+                }
+                MeteoriteNumonDis=0;
+            }
+            function collisionDetection() {
+                for(var i=0; i<MeteoriteNum; i++) {
+                    var b = Meteorite[i];
+                    if(b.status == 1) {
+                        if(b.r<=50){
+                            b.status = 0;
+                            lives--;
+                        }
+                    }
+                }
+            }
+            function DrawMeteorite() {
+                for(var i=0; i<MeteoriteNum; i++) {
+                    var b = Meteorite[i];
+                    if(b.status == 1) {
+                        ctx.beginPath();
+                        ctx.save();
+                        ctx.translate( 300, 300 );
+                        ctx.beginPath();
+                        ctx.rotate((Meteorite[i].de)* Math.PI / 180);
+                        ctx.rect(-5, Meteorite[i].r, 20, 20);
+                        ctx.fillStyle=b.color;ctx.fill();
+                        ctx.strokeStyle="#FFFFFF";
+                        ctx.stroke(); ctx.closePath(); 
+                        ctx.restore();
+                        ctx.closePath();
+                    }
+                }
+                
+            }
+
+            function mouseDownHandler(){
+                ctx.beginPath();
+                ctx.save();
+                ctx.translate( 300, 300 );
+                ctx.beginPath();
+                ctx.rotate((degree )* Math.PI / 180);
+                ctx.rect(-5, 65, 10, 900);
+                ctx.fillStyle="#FFFFFF";ctx.fill(); ctx.closePath(); 
+                ctx.restore();
+                ctx.closePath();
+                for(var i=0; i<MeteoriteNum; i++) {
+                    var b = Meteorite[i];
+                    if(b.status == 1) {
+                        if(b.de-10<=degree&&b.de+10>=degree){
+                            b.status = 0;
+                            score++;
+                            MeteoriteNumonDis++;
+                        }
+                    }
+                }
+            }
+            function TrackDegree(){
+                if((mouse.y-300>=0&&mouse.x-300>=0)||(mouse.y-300<=0&&mouse.x-300>=0)){
+                    degree=Math.asin((mouse.y-300)/Math.sqrt((mouse.y-300)*(mouse.y-300)+(mouse.x-300)*(mouse.x-300)))*180/Math.PI;
+                }else if((mouse.y-300<0&&mouse.x-300<0)||(mouse.y-300>0&&mouse.x-300<0)){
+                    degree=90+Math.acos((mouse.y-300)/Math.sqrt((mouse.y-300)*(mouse.y-300)+(mouse.x-300)*(mouse.x-300)))*180/Math.PI;
+                }
+                degree=degree-90;
+            }
+            function SettingBackground(){
+                ctx.strokeStyle = '#000079';
+                ctx.lineWidth="2";
+                for(var i=0;i<=30;i++){
+                    ctx.beginPath();ctx.moveTo(i*20,0);ctx.lineTo(i*20,600);ctx.closePath();ctx.stroke();
+                    ctx.beginPath();ctx.moveTo(0,i*20);ctx.lineTo(600,i*20);ctx.closePath();ctx.stroke();
+                }
+                ctx.beginPath();ctx.rect(600, 0, 5, 600);ctx.fillStyle = "#0095DD";ctx.fill();ctx.closePath();
+                ctx.beginPath();ctx.arc(300,300,50,0,Math.PI*2,true);ctx.fillStyle="#0095DD";ctx.fill();ctx.closePath();
+                ctx.beginPath();ctx.arc(300,300,30,0,Math.PI*2,true);ctx.fillStyle="#000000";ctx.fill();ctx.closePath(); 
+            } 
+            function EnergyBall(){
+                ctx.save();
+                ctx.translate( 300, 300 );
+                ctx.beginPath();
+                ctx.rotate(ed * Math.PI / 180);
+                ctx.rect(-10, -10, 20, 20);
+                ctx.fillStyle="#FFFFFF";ctx.fill(); ctx.closePath(); 
+                ctx.restore();
+            }           
+            function DrawGunBarrel(){
+                ctx.save();
+                ctx.translate( 300, 300 );
+                ctx.beginPath();
+                ctx.rotate(degree* Math.PI / 180);
+                ctx.rect(-10, 55, 20, 10);
+                ctx.fillStyle="#0095DD";ctx.fill(); ctx.closePath(); 
+                Barrelx=Math.cos(degree)*60;
+                Barrely=Math.sin(degree)*60;
+                ctx.closePath(); 
+                ctx.restore();
+            }
+            function DrawScore(){
+                ctx.beginPath();
+                ctx.font = "16px Arial";
+                ctx.fillStyle = "#FFFFFF";
+                ctx.fillText("Score: "+score, 8, 20);
+                ctx.closePath(); 
+            }
+            function drawLives() {
+                ctx.font = "16px Arial";
+                ctx.fillStyle = "#FFFFFF";
+                ctx.fillText("Lives: "+lives, 8, 40);
+            }
+            canvas.addEventListener('mousedown', mouseDownHandler, false);
+            function draw(){
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                SettingBackground(); 
+                EnergyBall();
+                DrawGunBarrel();
+                TrackDegree();
+                ed+=1236;
+                DrawMeteorite();
+                collisionDetection();
+                DrawScore();
+                drawLives();
+                for (var i = 0; i < MeteoriteNum; i++) {
+                    if(Meteorite[i].status==1){
+                        Meteorite[i].r=Meteorite[i].r-1;
+                        Meteorite[i].de=Meteorite[i].de+1;
+                        if(Meteorite[i].de>=180){
+                            Meteorite[i].de=-Meteorite[i].de;
+                        }
+                    }
+                }
+                if(MeteoriteNumonDis==6){
+                    resetM();
+                }
+                if(lives<=0){
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.beginPath();
+                    ctx.font = "50px Arial";
+                    ctx.fillStyle = "#FFFFFF";
+                    ctx.fillText("Lost", 230, 300);
+                    ctx.closePath(); 
+                    clearInterval(interval); 
+                }
+            }
+            setInterval(draw,50);
+        </script>
+    </body>
+</html>

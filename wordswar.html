@@ -1,0 +1,460 @@
+<!DOCTYPE html><html>
+    <head>
+        <title>Wordswar</title>
+        <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous">
+        </script>
+    </head>
+    <body>
+        <img id="final" src="">
+        <pre id="setting"><p style="position: absolute;top:70px;left: 300px;">level_01</p> <input type="number" name="scope" min="1" max="50" value="10" style="position: absolute;top:100px;left: 300px;">
+<p style="position: absolute;top:170px;left: 480px;">level_02</p> <input type="number" name="scope" min="1" max="50" value="10" style="position: absolute;top:200px;left: 480px;">
+<p style="position: absolute;top:370px;left: 480px;">level_03</p> <input type="number" name="scope" min="1" max="50" value="10" style="position: absolute;top:400px;left: 480px;">
+<p style="position: absolute;top:470px;left: 300px;">level_04</p> <input type="number" name="scope" min="1" max="50" value="10" style="position: absolute;top:500px;left: 300px;">
+<p style="position: absolute;top:370px;left: 120px;">level_05</p> <input type="number" name="scope" min="1" max="50" value="10" style="position: absolute;top:400px;left: 120px;">
+<p style="position: absolute;top:170px;left: 120px;">level_06</p> <input type="number" name="scope" min="1" max="50" value="10" style="position: absolute;top:200px;left: 120px;">
+<input style="position: absolute;top: 300px;;left: 310px;" id="go" type='button' value='GO~' onclick="fun()"/></pre>
+        <pre id="WordsSpace"><div id="wordsSpace01" name="wordsSpace"></div>
+            <div id="wordsSpace02" name="wordsSpace"></div>
+            <div id="wordsSpace03" name="wordsSpace"></div>
+            <div id="wordsSpace04" name="wordsSpace"></div>
+            <div id="wordsSpace05" name="wordsSpace"></div>
+            <div id="wordsSpace06" name="wordsSpace"></div></pre>
+        <canvas id="myCanvas" width="0" height="0" style="position: absolute;top:0px;left: 0px;background: rgb(0, 0, 0);display: block;margin: 0 auto;"></canvas>
+        <div id="words01"  style="position: absolute; top: 0px; left: 0px;"></div>
+        <div id="words03"  style="position: absolute; top: 0px; left: 0px;"></div>
+        <div id="words04"  style="position: absolute; top: 0px; left: 0px;"></div>
+        <div id="words05"  style="position: absolute; top: 0px; left: 0px;"></div>
+        <div id="words06"  style="position: absolute; top: 0px; left: 0px;"></div>
+        <div id="words02"  style="position: absolute; top: 0px; left: 0px;"></div>
+        <div id="word" style="position:absolute;top:0;left:0;"></div>
+        <script>          
+            var scope=[0,0,0,0,0,0];
+            var wordsScope=[,,,,,];
+            for(var i=0;i<6;i++){
+                wordsScope[i]=[];
+            }
+            var QuantityOfWords=[396,769,710,722,277,342];
+            var TimeOut=5*1000;
+            var interval=setTimeout(3);
+            var wordOver=0;
+            function generateRandomInt(min,max){
+                return Math.floor((Math.random() * (max+1 -min)) +min);
+            }
+            
+            function ShowWords(){
+                $.getJSON("https://raw.githubusercontent.com/IrisLiu-coder/english_words/main/level_01.json", function(data){
+                    var WordElment="<p>level_01"+"<br>";
+                    var wordsSpace = document.getElementById('wordsSpace01');
+                    for(var j=0;j<scope[0];j++){
+                        var randomNum=wordsScope?.[0]?.[j];
+                        WordElment=WordElment+String(j+1)+"."+data[randomNum]["word"]+" {"+data[randomNum]["ch"]+"}";
+                       // WordElment=WordElment+data[randomNum]["lv"];test
+                        WordElment=WordElment+"<br>";
+                    }
+                    wordsSpace.innerHTML = WordElment+"</p>";
+                    console.log(WordElment);                   
+                });   
+                $.getJSON("https://raw.githubusercontent.com/IrisLiu-coder/english_words/main/level_02.json", function(data){
+                    var WordElment="<p>level_02"+"<br>";
+                    var wordsSpace = document.getElementById('wordsSpace02');
+                    for(var j=0;j<scope[1];j++){var randomNum=wordsScope?.[1]?.[j];
+                        WordElment=WordElment+String(j+1)+"."+data[randomNum]["word"]+" {"+data[randomNum]["ch"]+"}";
+                        //testWordElment=WordElment+data[randomNum]["lv"];
+                        WordElment=WordElment+"<br>";
+                    }
+                    wordsSpace.innerHTML = WordElment+"</p>";
+                    console.log(WordElment)
+                });   
+                $.getJSON("https://raw.githubusercontent.com/IrisLiu-coder/english_words/main/level_03.json", function(data){
+                    var WordElment="<p>level_03"+"<br>";
+                    var wordsSpace = document.getElementById('wordsSpace03');
+                    for(var j=0;j<scope[2];j++){var randomNum=wordsScope?.[2]?.[j];
+                        WordElment=WordElment+String(j+1)+"."+data[randomNum]["word"]+" {"+data[randomNum]["ch"]+"}";
+                        //WordElment=WordElment+data[randomNum]["lv"];test
+                        WordElment=WordElment+"<br>";
+                    }
+                    wordsSpace.innerHTML = WordElment+"</p>";
+                    console.log(WordElment)
+                });   
+                $.getJSON("https://raw.githubusercontent.com/IrisLiu-coder/english_words/main/level_04.json", function(data){
+                    var WordElment="<p>level_04"+"<br>";
+                    var wordsSpace = document.getElementById('wordsSpace04');
+                    for(var j=0;j<scope[3];j++){var randomNum=wordsScope?.[3]?.[j];
+                        WordElment=WordElment+String(j+1)+"."+data[randomNum]["word"]+" {"+data[randomNum]["ch"]+"}";
+                        //testWordElment=WordElment+data[randomNum]["lv"];
+                        WordElment=WordElment+"<br>";
+                    }
+                    wordsSpace.innerHTML = WordElment+"</p>";
+                    console.log(WordElment)
+                });   
+                $.getJSON("https://raw.githubusercontent.com/IrisLiu-coder/english_words/main/level_05.json", function(data){
+                    var WordElment="<p>level_05"+"<br>";
+                    var wordsSpace = document.getElementById('wordsSpace05');
+                    for(var j=0;j<scope[4];j++){var randomNum=wordsScope?.[4]?.[j];
+                        WordElment=WordElment+String(j+1)+"."+data?.[randomNum]?.["word"]+" {"+data?.[randomNum]?.["ch"]+"}";
+                        //WordElment=WordElment+data[randomNum]["lv"];test
+                        WordElment=WordElment+"<br>";
+                    }
+                    wordsSpace.innerHTML = WordElment+"</p>";
+                    console.log(WordElment)
+                });   
+                $.getJSON("https://raw.githubusercontent.com/IrisLiu-coder/english_words/main/level_06.json", function(data){
+                    var WordElment="<p>level_06"+"<br>";
+                    var wordsSpace = document.getElementById('wordsSpace06');
+                    for(var j=0;j<scope[5];j++){var randomNum=wordsScope?.[5]?.[j];
+                        WordElment=WordElment+String(j+1)+"."+data?.[randomNum]?.["word"]+" {"+data?.[randomNum]?.["ch"]+"}";
+                        //WordElment=WordElment+data[randomNum]["lv"];test
+                        WordElment=WordElment+"<br>";
+                    }
+                    wordsSpace.innerHTML = WordElment+"</p>";
+                    console.log(WordElment)
+                });}
+            //game
+            function generateRandomInt(min,max){
+                return Math.floor((Math.random() * (max+1 -min)) +min);
+            }
+            function get_random_color() {
+                var color = "";
+                for(var i = 0; i < 3; i++) {
+                    var sub = Math.floor(Math.random() * 256).toString(16);
+                    color += (sub.length == 1 ? "0" + sub : sub);
+                }
+                return "#" + color;
+            }
+            var canvas = document.getElementById("myCanvas");
+            var ctx = canvas.getContext("2d");
+            var degree=270;bx=0;by=0;ed=0;Barrelx=0;Barrely=0;
+            var down=0,up=0,MeteoriteNum=6;score=0;MeteoriteNumonDis=0;lives=3;total=6;LostScore=0,CurrentLv=0,CurrentNum=0;
+            var Meteorite = [];
+            for (var i = 0; i < MeteoriteNum; i++) {
+                var degreeM=i*60;
+                if(degreeM>180){
+                    degreeM=-(degreeM-180);
+                }
+                Meteorite[i] = { r: 400, de: degreeM, status: 1,lv:-1 ,num:-1,color:get_random_color()};
+            }
+            let mouse = {
+                x : 0,y : 0,
+                };
+            window.addEventListener('mousemove',(event) => {
+                mouse.x = event.pageX;mouse.y = event.pageY;
+            });
+            function DrawWord(){
+                var a=generateRandomInt(0,5-MeteoriteNumonDis);
+                var b=0,c=0,k=0;
+                for(var i=0;i<6;i++){
+                    if(Meteorite[i].status==1){
+                        CurrentLv=Meteorite[i].lv;
+                        CurrentNum=Meteorite[i].num;
+                    }
+                    
+                }if(CurrentLv==0){
+                    CurrentLv=1;
+                }
+                $.getJSON("https://raw.githubusercontent.com/IrisLiu-coder/english_words/main/level_0"+String(CurrentLv)+".json", function(data){
+                        document.getElementById("word").style.cssText = 'font-size: 16px; color: white; position: absolute; top: 0 px; left: 0px;';
+                        document.getElementById("word").innerText="Word: "+data?.[CurrentNum]?.["ch"];
+                    });  
+            }
+            function resetM(){
+                if(total-wordOver<6){
+                    MeteoriteNum=total-wordOver;
+                }
+                for (var i = 0; i < MeteoriteNum; i++) {
+                    var degreeM=i*60;
+                    var lvM=0;
+                    var numM=wordOver;
+                    if(degreeM>180){
+                        degreeM=-(degreeM-180);
+                    }
+                    for(var j=0;j<5;j++){
+                        if(scope[j]<=numM){
+                            lvM+=1;numM-=scope[j];
+                        }
+                    }
+                    Meteorite[i] = { r: 300, de: degreeM, status: 1,lv: lvM+1 ,num : wordsScope?.[lvM]?.[numM],color:get_random_color(),};
+                    console.log(Meteorite[i].lv);
+                    wordOver+=1;
+                }
+                MeteoriteNumonDis=0;
+                DrawWord();
+            }
+            function collisionDetection() {
+                for(var i=0; i<MeteoriteNum; i++) {
+                    var b = Meteorite[i];
+                    if(b.status == 1) {
+                        if(b.r<=50){
+                            b.status = 0;
+                            lives--;
+                            MeteoriteNumonDis++;
+                            LostScore++;
+                        }
+                    }
+                }
+            }
+            function DrawMeteorite() {
+                for(var i=0; i<MeteoriteNum; i++) {
+                    var b = Meteorite[i];
+                    if(b.status == 1) {
+                        ctx.beginPath();
+                        ctx.save();
+                        ctx.translate( 300, 300 );
+                        ctx.beginPath();
+                        ctx.rotate((Meteorite[i].de)* Math.PI / 180);
+                        ctx.rect(-5, Meteorite[i].r, 20, 20);
+                        ctx.fillStyle=b.color;ctx.fill();
+                        ctx.strokeStyle="#FFFFFF";
+                        ctx.stroke(); ctx.closePath(); 
+                        ctx.restore();
+                        ctx.closePath();
+                    }
+                }
+                
+            }
+            function drawWords(){            
+                if(Meteorite[0].lv!=-1 && Meteorite[0].status==1){
+                    var nuM=Meteorite[0].num;
+                    var LM=Meteorite[0].r+40;
+                    var cosT01 = (Math.cos(((Meteorite[0].de+90)/360) * (Math.PI*2))*LM+300);
+                    var sinT01= (Math.sin(((Meteorite[0].de+90)/360) * (Math.PI*2))*LM+300);
+                    $.getJSON("https://raw.githubusercontent.com/IrisLiu-coder/english_words/main/level_0"+String(Meteorite[0].lv)+".json", function(data){
+                        document.getElementById("words01").style.cssText = 'font-size: 20px; color: white; position: absolute; top: '+sinT01+'px; left: '+cosT01+'px;';
+                        document.getElementById("words01").innerText=data?.[nuM]?.["word"];
+                    });  
+                }
+                if(Meteorite[1].lv!=-1 && Meteorite[1].status==1){
+                    var nuM2=Meteorite[1].num;
+                    var LM=Meteorite[1].r+40;
+                    var cosT02 = (Math.cos(((Meteorite[1].de+90)/360) * (Math.PI*2))*LM+300);
+                    var sinT02 = (Math.sin(((Meteorite[1].de+90)/360) * (Math.PI*2))*LM+300);
+                    $.getJSON("https://raw.githubusercontent.com/IrisLiu-coder/english_words/main/level_0"+String(Meteorite[1].lv)+".json", function(data){
+                        document.getElementById("words02").style.cssText = 'font-size: 20px; color: white; position: absolute; top: '+sinT02+'px; left: '+cosT02+'px;';
+                        document.getElementById("words02").innerText=data?.[nuM2]?.["word"];
+                    });  
+                }
+                if(Meteorite[2].lv!=-1 && Meteorite[2].status==1){
+                    var nuM3=Meteorite[2].num;
+                    var LM=Meteorite[2].r+40;
+                    var cosT3 = (Math.cos(((Meteorite[2].de+90)/360) * (Math.PI*2))*LM+300);
+                    var sinT3 = (Math.sin(((Meteorite[2].de+90)/360) * (Math.PI*2))*LM+300);
+                    $.getJSON("https://raw.githubusercontent.com/IrisLiu-coder/english_words/main/level_0"+String(Meteorite[2].lv)+".json", function(data){
+                        document.getElementById("words03").style.cssText = 'font-size: 20px; color: white; position: absolute; top: '+sinT3+'px; left: '+cosT3+'px;';
+                        document.getElementById("words03").innerText=data?.[nuM3]?.["word"];
+                    });  
+                }
+                if(Meteorite[3].lv!=-1 && Meteorite[3].status==1){
+                    var nuM4=Meteorite[3].num;
+                    var LM=Meteorite[3].r+40;
+                    var cosT4 = (Math.cos(((Meteorite[3].de+90)/360) * (Math.PI*2))*LM+300);
+                    var sinT4 = (Math.sin(((Meteorite[3].de+90)/360) * (Math.PI*2))*LM+300);
+                    $.getJSON("https://raw.githubusercontent.com/IrisLiu-coder/english_words/main/level_0"+String(Meteorite[3].lv)+".json", function(data){
+                        document.getElementById("words04").style.cssText = 'font-size: 20px; color: white; position: absolute; top: '+sinT4+'px; left: '+cosT4+'px;';
+                        document.getElementById("words04").innerText=data?.[nuM4]?.["word"];
+                    });  
+                }
+                if(Meteorite[4].lv!=-1 && Meteorite[4].status==1){
+                    var nuM5=Meteorite[4].num;
+                    var LM=Meteorite[4].r+40;
+                    var cosT5 = (Math.cos(((Meteorite[4].de+90)/360) * (Math.PI*2))*LM+300);
+                    var sinT5 = (Math.sin(((Meteorite[4].de+90)/360) * (Math.PI*2))*LM+300);
+                    $.getJSON("https://raw.githubusercontent.com/IrisLiu-coder/english_words/main/level_0"+String(Meteorite[4].lv)+".json", function(data){
+                        document.getElementById("words05").style.cssText = 'font-size: 20px; color: white; position: absolute; top: '+sinT5+'px; left: '+cosT5+'px;';
+                        document.getElementById("words05").innerText=data?.[nuM5]?.["word"];
+                    });  
+                }
+                if(Meteorite[5].lv!=-1 && Meteorite[5].status==1){
+                    var nuM6=Meteorite[5].num;
+                    var LM=Meteorite[5].r+40;
+                    var cosT6 = (Math.cos(((Meteorite[5].de+90)/360) * (Math.PI*2))*LM+300);
+                    var sinT6 = (Math.sin(((Meteorite[5].de+90)/360) * (Math.PI*2))*LM+300);
+                    $.getJSON("https://raw.githubusercontent.com/IrisLiu-coder/english_words/main/level_0"+String(Meteorite[5].lv)+".json", function(data){
+                        document.getElementById("words06").style.cssText = 'font-size: 20px; color: white; position: absolute; top: '+sinT6+'px; left: '+cosT6+'px;';
+                        document.getElementById("words06").innerText=data?.[nuM6]?.["word"];
+                    });  
+                }
+                
+            }
+            function mouseDownHandler(){
+                ctx.beginPath();
+                ctx.save();
+                ctx.translate( 300, 300 );
+                ctx.beginPath();
+                ctx.rotate((degree )* Math.PI / 180);
+                ctx.rect(-5, 65, 10, 900);
+                ctx.fillStyle="#FFFFFF";ctx.fill(); ctx.closePath(); 
+                ctx.restore();
+                ctx.closePath();
+                for(var i=0; i<MeteoriteNum; i++) {
+                    var b = Meteorite[i];
+                    if(b.status == 1 &&b.lv==-1) {
+                        if(b.de-10<=degree&&b.de+10>=degree){
+                            b.status = 0;
+                            score++;
+                            MeteoriteNumonDis++;
+                        }
+                    }else if(b.status == 1) {
+                        if(b.de-10<=degree&&b.de+10>=degree&&b.lv==CurrentLv&&CurrentNum==b.num){
+                            b.status = 0; 
+                            DrawWord();
+                            score++;
+                            MeteoriteNumonDis++;
+                            console.log(CurrentNum);
+                        }
+                    }
+                }
+            }
+            function TrackDegree(){
+                if((mouse.y-300>=0&&mouse.x-300>=0)||(mouse.y-300<=0&&mouse.x-300>=0)){
+                    degree=Math.asin((mouse.y-300)/Math.sqrt((mouse.y-300)*(mouse.y-300)+(mouse.x-300)*(mouse.x-300)))*180/Math.PI;
+                }else if((mouse.y-300<0&&mouse.x-300<0)||(mouse.y-300>0&&mouse.x-300<0)){
+                    degree=90+Math.acos((mouse.y-300)/Math.sqrt((mouse.y-300)*(mouse.y-300)+(mouse.x-300)*(mouse.x-300)))*180/Math.PI;
+                }
+                degree=degree-90;
+            }
+            function SettingBackground(){
+                ctx.strokeStyle = '#000079';
+                ctx.lineWidth="2";
+                for(var i=0;i<=30;i++){
+                    ctx.beginPath();ctx.moveTo(i*20,0);ctx.lineTo(i*20,600);ctx.closePath();ctx.stroke();
+                    ctx.beginPath();ctx.moveTo(0,i*20);ctx.lineTo(600,i*20);ctx.closePath();ctx.stroke();
+                }
+                ctx.beginPath();ctx.rect(600, 0, 5, 600);ctx.fillStyle = "#0095DD";ctx.fill();ctx.closePath();
+                ctx.beginPath();ctx.arc(300,300,50,0,Math.PI*2,true);ctx.fillStyle="#0095DD";ctx.fill();ctx.closePath();
+                ctx.beginPath();ctx.arc(300,300,30,0,Math.PI*2,true);ctx.fillStyle="#000000";ctx.fill();ctx.closePath(); 
+            } 
+            function EnergyBall(){
+                ctx.save();
+                ctx.translate( 300, 300 );
+                ctx.beginPath();
+                ctx.rotate(ed * Math.PI / 180);
+                ctx.rect(-10, -10, 20, 20);
+                ctx.fillStyle="#FFFFFF";ctx.fill(); ctx.closePath(); 
+                ctx.restore();
+            }           
+            function DrawGunBarrel(){
+                ctx.save();
+                ctx.translate( 300, 300 );
+                ctx.beginPath();
+                ctx.rotate(degree* Math.PI / 180);
+                ctx.rect(-10, 55, 20, 10);
+                ctx.fillStyle="#0095DD";ctx.fill(); ctx.closePath(); 
+                Barrelx=Math.cos(degree)*60;
+                Barrely=Math.sin(degree)*60;
+                ctx.closePath(); 
+                ctx.restore();
+            }
+            function DrawScore(){
+                ctx.beginPath();
+                ctx.font = "16px Arial";
+                ctx.fillStyle = "#FFFFFF";
+                ctx.fillText("Score: "+score/total*100, 8, 40);
+                ctx.closePath(); 
+            }
+            function drawLives() {
+                ctx.font = "16px Arial";
+                ctx.fillStyle = "#FFFFFF";
+                ctx.fillText("Lives: "+lives, 8, 60);
+            }
+            canvas.addEventListener('mousedown', mouseDownHandler, false);
+            function draw(){
+                for (var i = 0; i < MeteoriteNum; i++) {
+                    if(Meteorite[i].status==1){
+                        Meteorite[i].r=Meteorite[i].r-1;
+                        Meteorite[i].de=Meteorite[i].de+1;
+                        if(Meteorite[i].de>=180){
+                            Meteorite[i].de=-Meteorite[i].de;
+                        }
+                    }
+                }
+                if(MeteoriteNumonDis==6){
+                    resetM();
+                }
+                if(lives<=0){
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.beginPath();
+                    ctx.font = "50px Arial";
+                    ctx.fillStyle = "#FFFFFF";
+                    ctx.fillText("Lost", 230, 300);
+                    ctx.closePath(); 
+                    clearInterval(interval); 
+                    canvas.setAttribute("width","0px");
+                    canvas.setAttribute("height","0px");
+                    setTimeout('$("pre").hide("normal")',0);
+                    setTimeout('$("div").hide("normal")',0);
+                    document.getElementById("final").src="https://github.com/IrisLiu-coder/website_learning/blob/main/%E8%B3%87%E6%BA%90/LOST.png?raw=true";
+                }
+                if(LostScore+score>=total){
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.beginPath();
+                    ctx.font = "50px Arial";
+                    ctx.fillStyle = "#FFFFFF";
+                    ctx.fillText("You Win", 200, 300);
+                    ctx.closePath(); 
+                    ctx.beginPath();
+                    ctx.font = "16px Arial";
+                    ctx.fillStyle = "#FFFFFF";
+                    ctx.fillText("Score"+String(score)+"/"+String(total), 200, 320);
+                    ctx.closePath(); 
+                    clearInterval(interval); 
+                    canvas.setAttribute("width","0px");
+                    canvas.setAttribute("height","0px");
+                    setTimeout('$("pre").hide("normal")',0);
+                    setTimeout('$("div").hide("normal")',0);
+                    document.getElementById("final").src="https://github.com/IrisLiu-coder/website_learning/blob/main/%E8%B3%87%E6%BA%90/WIN.png?raw=true";
+                
+                }
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                SettingBackground(); 
+                EnergyBall();
+                DrawGunBarrel();
+                TrackDegree();
+                ed+=1236;
+                DrawMeteorite();
+                collisionDetection();
+                DrawScore();
+                drawLives();
+                drawWords();    
+            }
+            //have fun
+            function fun(){
+                document.getElementById("myCanvas").style.visibility = "hidden";
+                //選擇level與題目數量
+                obj = document.getElementsByName("scope");
+                check_val = [];
+                for(k in obj){
+                        check_val.push(obj[k].value);
+                    }
+                for(var i=0;i<6;i++){
+                    scope[i]=Number(check_val[i]);
+                    for(var j=0;j<Number(check_val[i]);j++){
+                        wordsScope[i].push(generateRandomInt(0,QuantityOfWords[0]-1));
+                    }
+                    total+=Number(check_val[i]);
+                }
+                console.log(scope);
+                console.log(wordsScope);
+                var obj = document.getElementById("setting");
+                obj.innerHTML = "";
+                var parentObj = obj.parentNode;
+                parentObj.removeChild(obj);
+                
+                //顯示單字5秒
+                ShowWords();
+                setTimeout('$("p").hide("normal")',TimeOut);
+
+                setTimeout('document.getElementById("myCanvas").style.visibility = "visible";',TimeOut+1000);
+                
+                var canvas = document.getElementById("myCanvas");
+                canvas.setAttribute("width","600px");
+                canvas.setAttribute("height","600px");
+                if(canvas.getAttribute("width")=="600px"){
+                    interval=setInterval('draw()',40);
+                }
+            }
+        </script>
+        
+    </body>
+</html>

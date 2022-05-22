@@ -29,7 +29,7 @@
         <div id="words05"  style="position: absolute; top: 0px; left: 0px;"></div>
         <div id="words06"  style="position: absolute; top: 0px; left: 0px;"></div>
         <div id="words02"  style="position: absolute; top: 0px; left: 0px;"></div>
-        <div id="word" style="position:absolute;top:0;left:0;"></div>
+        <div id="word" style="font-size: 16px; color: white;position:absolute;top:0px;left:10px;font: 1em sans-serif;"></div>
         <script>          
             var scope=[0,0,0,0,0,0];
             var wordsScope=[,,,,,];
@@ -150,12 +150,10 @@
                         CurrentLv=Meteorite[i].lv;
                         CurrentNum=Meteorite[i].num;
                     }
-                    
                 }if(CurrentLv==0){
                     CurrentLv=1;
                 }
                 $.getJSON("https://raw.githubusercontent.com/IrisLiu-coder/english_words/main/level_0"+String(CurrentLv)+".json", function(data){
-                        document.getElementById("word").style.cssText = 'font-size: 16px; color: white; position: absolute; top: 0 px; left: 0px;';
                         document.getElementById("word").innerText="Word: "+data?.[CurrentNum]?.["ch"];
                     });  
             }
@@ -163,18 +161,27 @@
                 if(total-wordOver<6){
                     MeteoriteNum=total-wordOver;
                 }
+                var degreeSum=[
+                    [0,60,120,180,240,300],
+                    [300,180,120,240,60,0],
+                    [300,180,240,120,0,60],
+                    [60,0,300,240,120,180],
+                    [0,120,60,300,240,180],
+                    [120,0,300,180,60,240]]
+                var degreeLast=degreeSum[generateRandomInt(0,5)];
                 for (var i = 0; i < MeteoriteNum; i++) {
-                    var degreeM=i*60;
+                    var degreeM=degreeLast[i];
                     var lvM=0;
                     var numM=wordOver;
+                    var numSum=scope[0];u=1;
                     if(degreeM>180){
                         degreeM=-(degreeM-180);
+                    }/**/
+                    while(numSum<=numM){
+                        numSum+=scope[u];
+                        u++;
                     }
-                    for(var j=0;j<5;j++){
-                        if(scope[j]<=numM){
-                            lvM+=1;numM-=scope[j];
-                        }
-                    }
+                    lvM=u-1;numM=numSum-numM;
                     Meteorite[i] = { r: 300, de: degreeM, status: 1,lv: lvM+1 ,num : wordsScope?.[lvM]?.[numM],color:get_random_color(),};
                     console.log(Meteorite[i].lv);
                     wordOver+=1;
@@ -350,7 +357,7 @@
                 ctx.beginPath();
                 ctx.font = "16px Arial";
                 ctx.fillStyle = "#FFFFFF";
-                ctx.fillText("Score: "+score/total*100, 8, 40);
+                ctx.fillText("Score: "+score/total*100+"%", 8, 40);
                 ctx.closePath(); 
             }
             function drawLives() {
@@ -430,12 +437,14 @@
                 for(var i=0;i<6;i++){
                     scope[i]=Number(check_val[i]);
                     for(var j=0;j<Number(check_val[i]);j++){
-                        wordsScope[i].push(generateRandomInt(0,QuantityOfWords[0]-1));
+                        wordsScope[i].push(generateRandomInt(0,QuantityOfWords[i]-1));
                     }
                     total+=Number(check_val[i]);
                 }
-                console.log(scope);
-                console.log(wordsScope);
+                for(var i=0;i<6;i++){
+                    console.log(scope[i]);
+                }
+                
                 var obj = document.getElementById("setting");
                 obj.innerHTML = "";
                 var parentObj = obj.parentNode;

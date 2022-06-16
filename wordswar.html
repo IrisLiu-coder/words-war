@@ -55,7 +55,6 @@
                         WordElment=WordElment+"<br>";
                     }
                     wordsSpace.innerHTML = WordElment+"</p>";
-                    console.log(WordElment);                   
                 });   
                 $.getJSON("https://raw.githubusercontent.com/IrisLiu-coder/english_words/main/level_02.json", function(data){
                     var WordElment="<p>level_02"+"<br>";
@@ -66,7 +65,6 @@
                         WordElment=WordElment+"<br>";
                     }
                     wordsSpace.innerHTML = WordElment+"</p>";
-                    console.log(WordElment)
                 });   
                 $.getJSON("https://raw.githubusercontent.com/IrisLiu-coder/english_words/main/level_03.json", function(data){
                     var WordElment="<p>level_03"+"<br>";
@@ -77,7 +75,6 @@
                         WordElment=WordElment+"<br>";
                     }
                     wordsSpace.innerHTML = WordElment+"</p>";
-                    console.log(WordElment)
                 });   
                 $.getJSON("https://raw.githubusercontent.com/IrisLiu-coder/english_words/main/level_04.json", function(data){
                     var WordElment="<p>level_04"+"<br>";
@@ -88,7 +85,6 @@
                         WordElment=WordElment+"<br>";
                     }
                     wordsSpace.innerHTML = WordElment+"</p>";
-                    console.log(WordElment)
                 });   
                 $.getJSON("https://raw.githubusercontent.com/IrisLiu-coder/english_words/main/level_05.json", function(data){
                     var WordElment="<p>level_05"+"<br>";
@@ -110,7 +106,6 @@
                         WordElment=WordElment+"<br>";
                     }
                     wordsSpace.innerHTML = WordElment+"</p>";
-                    console.log(WordElment)
                 });}
             //game
             function generateRandomInt(min,max){
@@ -183,7 +178,6 @@
                     }
                     lvM=u-1;numM=numSum-numM;
                     Meteorite[i] = { r: 300, de: degreeM, status: 1,lv: lvM+1 ,num : wordsScope?.[lvM]?.[numM],color:get_random_color(),};
-                    console.log(Meteorite[i].lv);
                     wordOver+=1;
                 }
                 MeteoriteNumonDis=0;
@@ -219,7 +213,6 @@
                         ctx.closePath();
                     }
                 }
-                
             }
             function drawWords(){            
                 if(Meteorite[0].lv!=-1 && Meteorite[0].status==1){
@@ -308,7 +301,6 @@
                             DrawWord();
                             score++;
                             MeteoriteNumonDis++;
-                            console.log(CurrentNum);
                         }
                     }
                 }
@@ -380,12 +372,6 @@
                     resetM();
                 }
                 if(lives<=0){
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    ctx.beginPath();
-                    ctx.font = "50px Arial";
-                    ctx.fillStyle = "#FFFFFF";
-                    ctx.fillText("Lost", 230, 300);
-                    ctx.closePath(); 
                     clearInterval(interval); 
                     canvas.setAttribute("width","0px");
                     canvas.setAttribute("height","0px");
@@ -394,24 +380,12 @@
                     document.getElementById("final").src="https://github.com/IrisLiu-coder/website_learning/blob/main/%E8%B3%87%E6%BA%90/LOST.png?raw=true";
                 }
                 if(LostScore+score>=total){
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    ctx.beginPath();
-                    ctx.font = "50px Arial";
-                    ctx.fillStyle = "#FFFFFF";
-                    ctx.fillText("You Win", 200, 300);
-                    ctx.closePath(); 
-                    ctx.beginPath();
-                    ctx.font = "16px Arial";
-                    ctx.fillStyle = "#FFFFFF";
-                    ctx.fillText("Score"+String(score)+"/"+String(total), 200, 320);
-                    ctx.closePath(); 
                     clearInterval(interval); 
                     canvas.setAttribute("width","0px");
                     canvas.setAttribute("height","0px");
                     setTimeout('$("pre").hide("normal")',0);
                     setTimeout('$("div").hide("normal")',0);
-                    document.getElementById("final").src="https://github.com/IrisLiu-coder/website_learning/blob/main/%E8%B3%87%E6%BA%90/WIN.png?raw=true";
-                
+                    document.getElementById("final").src="https://github.com/IrisLiu-coder/website_learning/blob/main/%E8%B3%87%E6%BA%90/WIN.png?raw=true";          
                 }
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 SettingBackground(); 
@@ -441,10 +415,6 @@
                     }
                     total+=Number(check_val[i]);
                 }
-                for(var i=0;i<6;i++){
-                    console.log(scope[i]);
-                }
-                
                 var obj = document.getElementById("setting");
                 obj.innerHTML = "";
                 var parentObj = obj.parentNode;
@@ -464,6 +434,5 @@
                 }
             }
         </script>
-        
     </body>
 </html>
